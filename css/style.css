@@ -229,22 +229,23 @@ body {
 .card {
   background: #74512d;
   color: #fff;
-  padding: 0;
+  padding: 15px;
   border-radius: 10px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
-  flex: 1;
-  min-width: 150px;
-  max-width: 200px;
   text-align: center;
   transition: all 0.3s ease;
   border: 2px solid transparent;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   position: relative;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  white-space: nowrap;
 }
 
 .card-image {
@@ -255,7 +256,7 @@ body {
 }
 
 .card span {
-  padding: 20px 15px;
+  padding: 0;
   display: block;
   transition: all 0.3s ease;
   position: relative;
@@ -307,7 +308,7 @@ footer {
   }
   
   .card {
-    min-width: 120px;
+    min-width: 140px;
     max-width: 150px;
   }
 }
