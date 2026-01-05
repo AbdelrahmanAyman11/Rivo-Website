@@ -32,8 +32,9 @@ body {
   color: #fff;
   text-decoration: none;
   margin: 0 8px;
-  font-size: 12px;
+  font-size: 16px;
   transition: color 0.3s ease;
+  font-weight: 600;
 }
 
 .navbar a:hover {
@@ -47,7 +48,7 @@ body {
 }
 
 .logo {
-  height: 50px;
+  height: 70px;
   transition: transform 0.3s ease;
 }
 .logo1 {
@@ -166,7 +167,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 40px;
   margin-bottom: 8px;
   padding: 15px 15px 0 15px;
   position: relative;
@@ -176,6 +177,12 @@ body {
 .item-header span:last-child {
   color: #f7f8f8;
   font-size: 20px;
+}
+
+.price {
+  font-size: 28px !important;
+  font-weight: 700;
+  padding-left: 25px;
 }
 
 .item p {
@@ -260,8 +267,8 @@ body {
 }
 
 .card:hover {
-  background: #09625d;
-  border-color: #00d4cc;
+  background: #eedbb1;
+  border-color: #74512d;
   transform: translateY(-8px);
   box-shadow: 0 8px 25px rgba(0, 212, 204, 0.3);
 }
@@ -272,6 +279,7 @@ footer {
   padding: 20px;
   background: #543310;
   margin-top: 40px;
+  font-size: 30px;
   border-top: 1px solid beige;
 }
 
