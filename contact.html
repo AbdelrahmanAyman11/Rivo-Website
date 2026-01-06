@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>Rivo | تواصل معنا</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- EmailJS Library -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      emailjs.init({
+        publicKey: "H0mLkAlaVdD3RiFx4", // ضع المفتاح هنا بعد التسجيل
+      });
+    })();
+  </script>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <img src="assets/logorivo.png" class="logo">
+  <ul>
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="about.html">من نحن؟</a></li>
+    <li><a href="contact.html">تواصل معنا</a></li>
+  </ul>
+</nav>
+
+<div class="contact-container">
+  <h1>تواصل معنا</h1>
+  <p class="contact-intro">نسعد بسماع آرائكم واقتراحاتكم وشكواكم</p>
+  
+  <form class="contact-form" id="contactForm">
+    <div class="form-group">
+      <label for="name">الاسم الكامل *</label>
+      <input type="text" id="name" name="name" required placeholder="أدخل اسمك الكامل">
+    </div>
+    
+    <div class="form-group">
+      <label for="email">البريد الإلكتروني *</label>
+      <input type="email" id="email" name="email" required placeholder="example@email.com">
+    </div>
+    
+    <div class="form-group">
+      <label for="phone">رقم الهاتف *</label>
+      <input type="tel" id="phone" name="phone" required placeholder="01xxxxxxxx">
+    </div>
+    
+    <div class="form-group">
+      <label for="type">نوع الرسالة *</label>
+      <select id="type" name="type" required>
+        <option value="">اختر نوع الرسالة</option>
+        <option value="suggestion">اقتراح</option>
+        <option value="complaint">شكوى</option>
+        <option value="inquiry">استفسار</option>
+        <option value="compliment">إشادة</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="subject">الموضوع *</label>
+      <input type="text" id="subject" name="subject" required placeholder="موضوع الرسالة">
+    </div>
+    
+    <div class="form-group">
+      <label for="message">الرسالة *</label>
+      <textarea id="message" name="message" rows="6" required placeholder="اكتب رسالتك هنا..."></textarea>
+    </div>
+    
+    <button type="submit" class="submit-btn">إرسال الرسالة</button>
+  </form>
+  
+  <div class="contact-info">
+    <h3>معلومات التواصل</h3>
+    <p>📱 الهاتف: 01224631403</p>
+    <p>📍  العنوان: مدينة العبور ـ الحي الأول محلية 5 سنتر قصر عطا</p>
+  </div>
+</div>
+
+<footer>
+  © 2026 Rivo
+</footer>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // الحصول على زر الإرسال
+  const submitBtn = this.querySelector('.submit-btn');
+  const originalText = submitBtn.textContent;
+  
+  // تعطيل الزر أثناء الإرسال
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'جاري الإرسال...';
+  
+  // تحديد نوع الرسالة بالعربي
+  const typeMap = {
+    'suggestion': 'اقتراح',
+    'complaint': 'شكوى',
+    'inquiry': 'استفسار',
+    'compliment': 'إشادة'
+  };
+  
+  const messageType = document.getElementById('type').value;
+  const messageTypeArabic = typeMap[messageType] || messageType;
+  
+  // إعداد بيانات الإرسال لـ EmailJS
+  const templateParams = {
+    to_email: 'noogafy567@gmail.com',
+    from_name: document.getElementById('name').value,
+    from_email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    message_type: messageTypeArabic,
+    subject: document.getElementById('subject').value,
+    message: document.getElementById('message').value,
+    reply_to: document.getElementById('email').value
+  };
+  
+  // إرسال البريد عبر EmailJS
+  emailjs.send('service_0q7ng3u', 'template_0yvwhbj', templateParams)
+    .then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+      alert('✅ تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.');
+      document.getElementById('contactForm').reset();
+    }, function(error) {
+      console.log('FAILED...', error);
+      alert('❌ حدث خطأ في إرسال الرسالة. يرجى المحاولة مرة أخرى.');
+    })
+    .finally(function() {
+      // إعادة تفعيل الزر
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    });
+});
+</script>
+
+</body>
+</html>
