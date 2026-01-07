@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>Rivo | قيّمنا</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript" src="js/emailjs-config.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <img src="assets/logorivo.png" class="logo">
+  <ul>
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="about.html">من نحن؟</a></li>
+    <li><a href="contact.html">تواصل معنا</a></li>
+    <li><a href="RateUs.html" class="active">قيّمنا</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <img src="assets/logorivo.png" class="logo1">
+  <p>جودة • طعم • فخامة</p>
+</header>
+
+<section class="rating-section">
+  <div class="rating-container">
+    <h1>نحن نقدّر رأيك! 💛</h1>
+    <p class="subtitle">شاركنا تجربتك في Rivo</p>
+    
+    <form id="ratingForm" class="rating-form">
+      
+      <!-- Star Rating -->
+      <div class="star-rating-container">
+        <label class="form-label">التقييم:</label>
+        <div class="stars">
+          <input type="radio" id="star5" name="rating" value="5" required>
+          <label for="star5" class="star">★</label>
+          
+          <input type="radio" id="star4" name="rating" value="4">
+          <label for="star4" class="star">★</label>
+          
+          <input type="radio" id="star3" name="rating" value="3">
+          <label for="star3" class="star">★</label>
+          
+          <input type="radio" id="star2" name="rating" value="2">
+          <label for="star2" class="star">★</label>
+          
+          <input type="radio" id="star1" name="rating" value="1">
+          <label for="star1" class="star">★</label>
+        </div>
+        <div class="rating-value" id="ratingValue">اختر تقييمك</div>
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label for="userName" class="form-label">الاسم:</label>
+        <input type="text" id="userName" name="user_name" placeholder="أدخل اسمك" required>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn">
+        إرسال التقييم 
+      </button>
+    </form>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message" style="display: none;">
+      <h3>شكراً لك! 🌟</h3>
+      <p>تم إرسال تقييمك بنجاح. نقدر وقتك وآرائك!</p>
+    </div>
+
+    <!-- Error Message -->
+    <div id="errorMessage" class="error-message" style="display: none;">
+      <h3>عذراً! ⚠️</h3>
+      <p>حدث خطأ أثناء إرسال التقييم. يرجى المحاولة مرة أخرى.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  © 2026 Rivo
+</footer>
+
+<script>
+// Star Rating Interaction
+const stars = document.querySelectorAll('.star');
+const ratingValue = document.getElementById('ratingValue');
+const ratingInputs = document.querySelectorAll('input[name="rating"]');
+
+const ratingTexts = {
+  1: '⭐ ضعيف',
+  2: '⭐⭐ مقبول',
+  3: '⭐⭐⭐ جيد',
+  4: '⭐⭐⭐⭐ ممتاز',
+  5: '⭐⭐⭐⭐⭐ رائع!'
+};
+
+// Update rating display
+ratingInputs.forEach((input) => {
+  input.addEventListener('change', function() {
+    ratingValue.textContent = ratingTexts[this.value];
+    ratingValue.style.color = '#FFD700';
+  });
+});
+
+// Star hover effect
+stars.forEach((star, index) => {
+  star.addEventListener('mouseenter', function() {
+    highlightStars(5 - index);
+  });
+});
+
+document.querySelector('.stars').addEventListener('mouseleave', function() {
+  const checked = document.querySelector('input[name="rating"]:checked');
+  if (checked) {
+    highlightStars(checked.value);
+  } else {
+    clearStars();
+  }
+});
+
+function highlightStars(rating) {
+  stars.forEach((star, index) => {
+    if (5 - index <= rating) {
+      star.classList.add('hover');
+    } else {
+      star.classList.remove('hover');
+    }
+  });
+}
+
+function clearStars() {
+  stars.forEach((star) => {
+    star.classList.remove('hover');
+  });
+}
+
+// Form submission with EmailJS
+document.getElementById('ratingForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const submitBtn = this.querySelector('.submit-btn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'جاري الإرسال...';
+  
+  // Get form data
+  const formData = {
+    to_email: 'noogafy567@gmail.com',  // الإيميل المستلم
+    rating: document.querySelector('input[name="rating"]:checked').value,
+    user_name: document.getElementById('userName').value,
+    rating_text: ratingTexts[document.querySelector('input[name="rating"]:checked').value]
+  };
+  
+  // Send email using EmailJS
+  emailjs.send(EMAILJS_CONFIG.SERVICE_ID_RATING, EMAILJS_CONFIG.TEMPLATE_ID_RATING, formData)
+    .then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+      
+      // Hide form and show success message
+      document.getElementById('ratingForm').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+      
+      // Reset form after 5 seconds
+      setTimeout(function() {
+        document.getElementById('ratingForm').reset();
+        document.getElementById('ratingForm').style.display = 'block';
+        document.getElementById('successMessage').style.display = 'none';
+        ratingValue.textContent = 'اختر تقييمك';
+        ratingValue.style.color = '#fff';
+        clearStars();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'إرسال التقييم ✨';
+      }, 5000);
+      
+    }, function(error) {
+      console.error('FAILED...', error);
+      console.error('Error details:', JSON.stringify(error));
+      
+      // Show error message
+      document.getElementById('errorMessage').style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'إرسال التقييم ';
+      
+      setTimeout(function() {
+        document.getElementById('errorMessage').style.display = 'none';
+      }, 5000);
+    });
+});
+</script>
+
+</body>
+</html>

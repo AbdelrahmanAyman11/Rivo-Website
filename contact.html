@@ -7,13 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- EmailJS Library -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script type="text/javascript">
-    (function(){
-      emailjs.init({
-        publicKey: "H0mLkAlaVdD3RiFx4", // ضع المفتاح هنا بعد التسجيل
-      });
-    })();
-  </script>
+  <script type="text/javascript" src="js/emailjs-config.js"></script>
 </head>
 
 <body>
@@ -24,6 +18,7 @@
     <li><a href="index.html">الرئيسية</a></li>
     <li><a href="about.html">من نحن؟</a></li>
     <li><a href="contact.html">تواصل معنا</a></li>
+    <li><a href="RateUs.html">قيّمنا</a></li>
   </ul>
 </nav>
 
@@ -112,7 +107,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   };
   
   // إرسال البريد عبر EmailJS
-  emailjs.send('service_0q7ng3u', 'template_0yvwhbj', templateParams)
+  emailjs.send(EMAILJS_CONFIG.SERVICE_ID_CONTACT, EMAILJS_CONFIG.TEMPLATE_ID_CONTACT, templateParams)
     .then(function(response) {
       console.log('SUCCESS!', response.status, response.text);
       alert('✅ تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.');
