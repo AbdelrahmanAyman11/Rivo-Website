@@ -7,7 +7,26 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- EmailJS Library -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script type="text/javascript" src="js/emailjs-config.js"></script>
+  <script type="text/javascript">
+    // EmailJS Configuration
+    const EMAILJS_CONFIG = {
+      PUBLIC_KEY: 'H0mLkAlaVdD3RiFx4',
+      SERVICE_ID_CONTACT: 'service_0q7ng3u',
+      TEMPLATE_ID_CONTACT: 'template_0yvwhbj'
+    };
+    
+    // Initialize EmailJS
+    (function(){
+      try {
+        emailjs.init({
+          publicKey: EMAILJS_CONFIG.PUBLIC_KEY
+        });
+        console.log('EmailJS initialized successfully');
+      } catch(error) {
+        console.error('EmailJS initialization failed:', error);
+      }
+    })();
+  </script>
 </head>
 
 <body>
